@@ -1,15 +1,11 @@
-<template>
-  <div>
-    <p>{{ title }}</p>
-    <ul>
-      <li v-for="todo in todos" :key="todo.id" @click="increment">
-        {{ todo.id }} - {{ todo.content }}
-      </li>
-    </ul>
-    <p>Count: {{ todoCount }} / {{ meta.totalCount }}</p>
-    <p>Active: {{ active ? 'yes' : 'no' }}</p>
-    <p>Clicks on todos: {{ clickCount }}</p>
-  </div>
+<template lang="pug">
+div
+  p {{ title }}
+  ul
+    li(v-for='todo in todos' :key='todo.id' @click='increment')
+      | {{ todo.id }} - {{ todo.content }}
+  p Count: {{ todoCount }} / {{ meta.totalCount }}
+  p Clicks on todos: {{ clickCount }}
 </template>
 
 <script lang="ts">
@@ -18,6 +14,7 @@ import { Todo, Meta } from './models'
 
 @Component
 export default class ClassComponent extends Vue {
+  private model = ''
   @Prop({ type: String, required: true }) readonly title!: string;
   @Prop({ type: Array, default: () => [] }) readonly todos!: Todo[];
   @Prop({ type: Object, required: true }) readonly meta!: Meta;
