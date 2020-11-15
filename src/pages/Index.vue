@@ -10,7 +10,8 @@
       q-tabs(align='left')
         q-route-tab(to='/page1' label='Page One')
         q-route-tab(to='/page2' label='Page Two')
-        q-route-tab(to='/page3' label='Page Three')
+        q-route-tab(to='/page3' label=testLabel)
+        q-btn(@click="testRequestSender")
     q-drawer(v-model='left' side='left' overlay='' bordered='')
     q-page-container
       router-view
@@ -18,12 +19,18 @@
 
 <script lang="ts">
 import ExampleComponent from 'components/ClassComponent.vue'
-import { Vue, Component } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
+import TestRequestImpl from 'src/requests/implementations/TestRequestImpl'
 
 @Component({
   components: { ExampleComponent }
 })
-export default class PageIndex extends Vue {
+export default class PageIndex extends Mixins(TestRequestImpl) {
   private left = true;
+  testLabel = ''
+
+  private async testRequestSender (): Promise<void> {
+    this.testLabel = await this.getTest()
+  }
 }
 </script>
