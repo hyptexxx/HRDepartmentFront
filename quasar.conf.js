@@ -51,7 +51,14 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       vueRouterMode: 'history', // available values: 'hash', 'history'
-
+      env: ctx.dev
+        ? { // so on dev we'll have
+          API_BASE_URL: 'http://localhost:8080/api/v1/'
+        }
+        : { // and on build (production):
+          API_BASE_URL: 'api/v1/'
+        },
+      publicPath: ctx.dev ? '' : '/',
       // transpile: false,
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
