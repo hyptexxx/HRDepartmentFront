@@ -10,6 +10,7 @@
       q-tabs(align='left')
         q-route-tab(to='/page1' label='Page One')
         q-route-tab(to='/page2' label='Page Two')
+        spanb
         q-route-tab(to='/page3' label=testLabel)
         q-btn(@click="testRequestSender")
     q-drawer(v-model='left' side='left' overlay='' bordered='')
