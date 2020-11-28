@@ -1,36 +1,40 @@
 <template lang="pug">
-  q-layout(view='hHr lpr fff')
-    q-header.bg-primary.text-white(elevated='' height-hint='98')
-      q-toolbar
-        q-btn(dense='' flat='' round='' icon='menu' @click='left = !left')
-        q-toolbar-title
+q-layout(view='hHr lpr fff')
+  q-dialog(v-model='this.windowVisible' persistent='' transition-show='scale' transition-hide='scale')
+    login-form
+  q-header.bg-primary.text-white(elevated='' height-hint='98')
+    q-toolbar
+      q-btn(dense='' flat='' round='' icon='menu' @click='left = !left')
+      q-toolbar-title
+        | Отдел кадров
+    q-tabs(align='left')
+      q-route-tab(to='/page1' label='Page One')
+      q-route-tab(to='/page2' label='Page Two')
+  q-drawer(v-model='left' side='left' overlay='' bordered='')
+    q-btn(style="width: 100%" @click="setVisible(true)")
+      q-item
+        q-item-section(avatar='')
           q-avatar
-            img(src='https://cdn.quasar.dev/logo/svg/quasar-logo.svg')
-          |           Title
-      q-tabs(align='left')
-        q-route-tab(to='/page1' label='Page One')
-        q-route-tab(to='/page2' label='Page Two')
-        q-route-tab(to='/page3' label=testLabel)
-        q-btn(@click="testRequestSender")
-    q-drawer(v-model='left' side='left' overlay='' bordered='')
-    q-page-container
-      router-view
+            img(src='https://cdn.quasar.dev/img/avatar3.jpg')
+        q-item-section Lily
 </template>
 
 <script lang="ts">
 import ExampleComponent from 'components/ClassComponent.vue'
 import { Component, Mixins } from 'vue-property-decorator'
-import TestRequestImpl from 'src/requests/implementations/TestRequestImpl'
+import AuthApiRequestImpl from 'src/requests/implementations/AuthApiRequestImpl'
+import LoginValidation from 'src/validation/LoginValidation'
+import LoginForm from 'components/LoginForm.vue'
+import LoginStore from 'src/store/LoginStore'
 
 @Component({
-  components: { ExampleComponent }
+  components: {
+    ExampleComponent,
+    LoginForm
+  },
+  validations: LoginValidation
 })
-export default class PageIndex extends Mixins(TestRequestImpl) {
-  private left = true;
-  testLabel = ''
-
-  private async testRequestSender (): Promise<void> {
-    this.testLabel = await this.getTest()
-  }
+export default class PageIndex extends Mixins(AuthApiRequestImpl, LoginStore) {
+  private left = true
 }
 </script>

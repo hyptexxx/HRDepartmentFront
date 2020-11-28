@@ -1,0 +1,61 @@
+<template lang="pug">
+  q-card.text-black(style='width: 300px')
+    q-card-section
+      .text-h6 Авторизация
+
+    q-card-section
+      q-input(filled v-model="userCredentials.login" label="Логин" type='text')
+      span(v-if="!$v.userCredentials.login.required && $v.userCredentials.login.$params.required" class="error-label") Обязательно
+    q-card-section
+      q-input(filled v-model="userCredentials.password" label="Пароль" type='password')
+      span(v-if="!$v.userCredentials.password.required && $v.userCredentials.password.$params.required" class="error-label") Обязательно
+    q-card-actions.bg-white.text-black(align='right')
+      q-btn(flat='' label='OK' @click="authorizeUser")
+</template>
+
+<script lang="ts">
+import ExampleComponent from 'components/ClassComponent.vue'
+import { Component, Mixins } from 'vue-property-decorator'
+import { validationMixin } from 'vuelidate'
+import { AuthResponse, UserCredentials } from 'src/models/auth'
+import LoginValidation from 'src/validation/LoginValidation'
+import LoginStore from 'src/store/LoginStore'
+
+@Component({
+  components: { ExampleComponent },
+  mixins: [validationMixin],
+  validations: LoginValidation
+})
+export default class LoginForm extends Mixins(LoginStore) {
+  private userCredentials: UserCredentials = {
+    login: '',
+    password: ''
+  }
+
+  private async authorizeUser (): Promise<void> {
+    this.$v.$touch()
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
+    this.$store.state.windowVisible = false
+    if (!this.$v.$anyError) {
+      const formData = new FormData()
+      formData.append('login', this.userCredentials.login)
+      formData.append('password', this.userCredentials.password)
+      const result = await this.$axios.post<AuthResponse>('/auth', formData)
+      switch (result.status) {
+        case 200:
+          this.$q.localStorage.set('isLogged', true)
+          this.setVisible(false)
+          break
+      }
+    } else {
+      this.$q.notify({
+        color: 'negative',
+        message: 'Поля не заполнены',
+        icon: 'report_problem',
+        progress: true,
+        position: 'bottom'
+      })
+    }
+  }
+}
+</script>
