@@ -1,22 +1,20 @@
 <template lang="pug">
-q-layout(view='hHr lpr fff')
-  q-dialog(v-model='this.windowVisible' persistent='' transition-show='scale' transition-hide='scale')
-    login-form
-  q-header.bg-primary.text-white(elevated='' height-hint='98')
-    q-toolbar
-      q-btn(dense='' flat='' round='' icon='menu' @click='left = !left')
-      q-toolbar-title
-        | Отдел кадров
-    q-tabs(align='left')
-      q-route-tab(to='/page1' label='Page One')
-      q-route-tab(to='/page2' label='Page Two')
-  q-drawer(v-model='left' side='left' overlay='' bordered='')
-    q-btn(style="width: 100%" @click="setVisible(true)")
-      q-item
-        q-item-section(avatar='')
+  q-layout(view='hHr lpr fff')
+    q-header.bg-primary.text-white(elevated='' height-hint='98')
+      q-toolbar
+        q-btn(dense='' flat='' round='' icon='menu' @click='left = !left')
+        q-toolbar-title
           q-avatar
-            img(src='https://cdn.quasar.dev/img/avatar3.jpg')
-        q-item-section Lily
+            img(src='https://cdn.quasar.dev/logo/svg/quasar-logo.svg')
+          |           Title
+      q-tabs(align='left')
+        q-route-tab(to='/page1' label='Page One')
+        q-route-tab(to='/page2' label='Page Two')
+        q-route-tab(to='/page3' label=testLabel)
+        q-btn(@click="testRequestSender")
+    q-drawer(v-model='left' side='left' overlay='' bordered='')
+    q-page-container
+      router-view
 </template>
 
 <script lang="ts">
