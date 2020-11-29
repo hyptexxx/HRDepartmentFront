@@ -12,4 +12,5 @@ export interface User {
   login: string
   post: string
   idUser: number
+  role: string
 }

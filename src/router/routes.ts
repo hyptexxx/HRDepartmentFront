@@ -1,14 +1,24 @@
 import { RouteConfig } from 'vue-router'
+import VacationsAnonimous from 'components/VacationsAnonimous.vue'
+import MainLayout from 'layouts/MainLayout.vue'
+import Index from 'pages/Index.vue'
 
 const routes: RouteConfig[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    components: {
+      default: MainLayout
+    },
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      {
+        path: '',
+        component: Index,
+        children: [
+          { name: 'vacantions', path: '/vacantions', component: VacationsAnonimous }
+        ]
+      }
     ]
   },
-
   // Always leave this as last one,
   // but you can also remove it
   {

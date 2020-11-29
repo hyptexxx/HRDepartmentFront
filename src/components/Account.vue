@@ -24,17 +24,18 @@
 <script lang="ts">
 
 import { Component, Mixins, Watch } from 'vue-property-decorator'
-import AuthApiRequestImpl from 'src/requests/implementations/AuthApiRequestImpl'
 import LoginStore from 'src/store/LoginStore'
 import { AuthResponse, User } from 'src/models/auth'
+import ApiRequestImpl from 'src/requests/implementations/ApiRequestImpl'
 
 @Component
-export default class Account extends Mixins(AuthApiRequestImpl, LoginStore) {
+export default class Account extends Mixins(ApiRequestImpl, LoginStore) {
   private isLoginned = false
   private user: User | null = {
     login: '',
     post: '',
-    idUser: 0
+    idUser: 0,
+    role: 'admin'
   }
 
   @Watch('loginned')
@@ -50,7 +51,7 @@ export default class Account extends Mixins(AuthApiRequestImpl, LoginStore) {
     const result = await this.$axios.post<AuthResponse>('/logout')
 
     switch (result.status) {
-      case 200:
+      case 404:
 
         this.$q.localStorage.remove('isLogged')
         this.$q.localStorage.remove('user')

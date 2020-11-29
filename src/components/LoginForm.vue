@@ -4,10 +4,10 @@
       .text-h6 Авторизация
     q-card-section
       q-input(filled v-model="userCredentials.login" label="Логин" type='text')
-      span(v-if="!$v.userCredentials.login.required && $v.userCredentials.login.$params.required" class="error-label") Обязательно
+      span.text-red-10(v-if="!$v.userCredentials.login.required && $v.userCredentials.login.$params.required" class="error-label") Обязательно
     q-card-section
       q-input(filled v-model="userCredentials.password" label="Пароль" type='password')
-      span(v-if="!$v.userCredentials.password.required && $v.userCredentials.password.$params.required" class="error-label") Обязательно
+      span.text-red-10(v-if="!$v.userCredentials.password.required && $v.userCredentials.password.$params.required" class="error-label") Обязательно
     q-card-actions.bg-white.text-black(align='right')
       q-btn(flat='' label='OK' @click="authorizeUser")
 </template>
@@ -31,11 +31,19 @@ export default class LoginForm extends Mixins(LoginStore) {
     password: ''
   }
 
+  // руководитель - текущие сотрудники (нет редактирования)
+  // хр - текущие (crud) + те кто оставил заявки (принять отклонить)
+  // бухгатлер - текущие сотрудники (просмотр) + зарплаты (редактирование)
   private async authorizeUser (): Promise<void> {
     this.$v.$touch()
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
     this.$store.state.windowVisible = false
-
+    const testResponse: User = {
+      login: 'test',
+      post: 'test',
+      idUser: 123,
+      role: 'admin'
+    }
     if (!this.$v.$anyError) {
       const formData = new FormData()
 
@@ -45,15 +53,15 @@ export default class LoginForm extends Mixins(LoginStore) {
       const result = await this.$axios.post<AuthResponse>('/auth', formData)
 
       switch (result.status) {
-        case 200:
+        case 404:
 
           this.$q.localStorage.set('isLogged', true)
-          this.$q.localStorage.set('user', result as unknown as User)
+          this.$q.localStorage.set('user', testResponse)
 
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
           this.setLoginned(true)
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
-          this.setResponseUser(result as unknown as User)
+          this.setResponseUser(testResponse as unknown as User)
 
           this.setVisible(false)
 
