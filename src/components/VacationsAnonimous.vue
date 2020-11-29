@@ -71,7 +71,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl) {
   }
 
   private isUserAnonimous (): boolean {
-    return !!(this.$q.localStorage.getItem('user') as User)
+    return !(this.$q.localStorage.getItem('user') as User)
   }
 }
 </script>

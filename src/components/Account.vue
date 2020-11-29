@@ -51,7 +51,7 @@ export default class Account extends Mixins(ApiRequestImpl, LoginStore) {
     const result = await this.$axios.post<AuthResponse>('/logout')
 
     switch (result.status) {
-      case 404:
+      case 200:
 
         this.$q.localStorage.remove('isLogged')
         this.$q.localStorage.remove('user')
