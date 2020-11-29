@@ -2,7 +2,6 @@
   q-card.text-black(style='width: 300px')
     q-card-section
       .text-h6 Авторизация
-
     q-card-section
       q-input(filled v-model="userCredentials.login" label="Логин" type='text')
       span(v-if="!$v.userCredentials.login.required && $v.userCredentials.login.$params.required" class="error-label") Обязательно

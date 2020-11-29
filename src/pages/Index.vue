@@ -1,5 +1,5 @@
 <template lang="pug">
-  q-layout(view='hHr lpr fff')
+q-layout(view='hHr lpr fff')
     q-header.bg-primary.text-white(elevated='' height-hint='98')
       q-toolbar
         q-btn(dense='' flat='' round='' icon='menu' @click='left = !left')
@@ -14,11 +14,10 @@
         q-btn(@click="testRequestSender")
     q-drawer(v-model='left' side='left' overlay='' bordered='')
     q-page-container
-      router-view
+      login-form
 </template>
 
 <script lang="ts">
-import ExampleComponent from 'components/ClassComponent.vue'
 import { Component, Mixins } from 'vue-property-decorator'
 import AuthApiRequestImpl from 'src/requests/implementations/AuthApiRequestImpl'
 import LoginValidation from 'src/validation/LoginValidation'
@@ -27,7 +26,6 @@ import LoginStore from 'src/store/LoginStore'
 
 @Component({
   components: {
-    ExampleComponent,
     LoginForm
   },
   validations: LoginValidation
