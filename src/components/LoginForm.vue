@@ -16,7 +16,7 @@
 import ExampleComponent from 'components/ClassComponent.vue'
 import { Component, Mixins } from 'vue-property-decorator'
 import { validationMixin } from 'vuelidate'
-import { AuthResponse, UserCredentials } from 'src/models/auth'
+import { AuthResponse, User, UserCredentials } from 'src/models/auth'
 import LoginValidation from 'src/validation/LoginValidation'
 import LoginStore from 'src/store/LoginStore'
 
@@ -35,18 +35,38 @@ export default class LoginForm extends Mixins(LoginStore) {
     this.$v.$touch()
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
     this.$store.state.windowVisible = false
+    const testResponse: User = {
+      login: 'test',
+      post: 'test',
+      idUser: 123
+    }
     if (!this.$v.$anyError) {
       const formData = new FormData()
+
       formData.append('login', this.userCredentials.login)
       formData.append('password', this.userCredentials.password)
+
       const result = await this.$axios.post<AuthResponse>('/auth', formData)
+
       switch (result.status) {
-        case 200:
+        case 404:
+
           this.$q.localStorage.set('isLogged', true)
+          this.$q.localStorage.set('user', testResponse)
+
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
+          this.setLoginned(true)
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
+          this.setResponseUser(testResponse as unknown as User)
+
           this.setVisible(false)
+
           break
       }
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
+      this.setLoginned(false)
+
       this.$q.notify({
         color: 'negative',
         message: 'Поля не заполнены',

@@ -127,7 +127,9 @@ module.exports = configure(function (ctx) {
       plugins: [
         'LoadingBar',
         'Notify',
-        'LocalStorage'
+        'LocalStorage',
+        'LocalStorage',
+        'SessionStorage'
       ],
       config: {
         // dark: 'true',

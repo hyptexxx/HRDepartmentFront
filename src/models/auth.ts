@@ -11,5 +11,5 @@ export interface UserCredentials {
 export interface User {
   login: string
   post: string
-  idUser: string
+  idUser: number
 }
