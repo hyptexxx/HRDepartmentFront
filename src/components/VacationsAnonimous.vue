@@ -71,8 +71,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl) {
   }
 
   private isUserAnonimous (): boolean {
-    console.log((this.$q.localStorage.getItem('user') as User).role)
-    return (this.$q.localStorage.getItem('user') as User).role === 'admin'
+    return !!(this.$q.localStorage.getItem('user') as User)
   }
 }
 </script>
