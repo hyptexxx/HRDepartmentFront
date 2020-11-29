@@ -2,7 +2,7 @@
 q-layout(view='hHr lpr fff')
   q-dialog(v-model="isLoginVisible" @hide='hideLoginForm')
     login-form
-  q-header.bg-primary.text-white(elevated='' height-hint='98')
+  q-header.bg-grey-9.text-white(elevated='' height-hint='98')
     q-toolbar
       q-btn(dense='' flat='' round='' icon='menu' @click='left = !left')
       q-toolbar-title
@@ -10,7 +10,7 @@ q-layout(view='hHr lpr fff')
     q-tabs(align='left')
       q-route-tab(to='/page1' label='Page One')
       q-route-tab(to='/page2' label='Page Two')
-  q-drawer(v-model='left' side='left' overlay='' bordered='')
+  q-drawer.bg-amber-5(v-model='left' side='left' content-class="bg-grey-9 text-white" overlay='' bordered='')
     account
   q-page-container
 </template>

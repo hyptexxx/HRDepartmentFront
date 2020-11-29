@@ -1,22 +1,22 @@
 <template lang="pug">
-  q-list(bordered class="rounded-borders")
-    q-expansion-item(v-if="isLoginned === true")
-      template(v-slot:header='')
+  q-list(bordered class="rounded-borders").text-white
+    q-expansion-item.bg-grey-10(v-if="isLoginned === true").text-white
+      template(v-slot:header='').text-white
         q-item-section(avatar='')
           q-avatar(rounded='' size='48px')
             img(src='https://cdn.quasar.dev/img/avatar.png')
-        q-item-section
-          q-item-label {{user.login}}
-          q-item-label(caption='') {{user.post}}
-        q-item-section(side='')
+        q-item-section.text-white
+          q-item-label.text-white {{user.login}}
+          q-item-label.text-white(caption='') {{user.post}}
+        q-item-section(side='').text-white
           | Аккаунт
-      q-card
-        q-btn(@click="" align="left" icon="view_compact" flat label="Личный кабинет" style="width: 100%")
-        q-btn(@click="logout" align="left" icon="directions_run" flat label="Выход" color="red" style="width: 100%")
-    q-btn(v-else flat style="width: 100%" @click="setVisible(true)")
+      q-card.bg-grey-8
+        q-btn.bg-grey-8(@click="" align="left" icon="view_compact" flat label="Личный кабинет" style="width: 100%")
+        q-btn.bg-grey-8(@click="logout" align="left" icon="directions_run" flat label="Выход" style="width: 100%")
+    q-btn.bg-grey-10(v-else flat style="width: 100%" @click="setVisible(true)")
       q-item-section(avatar='')
         q-avatar(rounded='' size='48px')
-          img(src='https://cdn.quasar.dev/img/avatar.png')
+          img(src='https://school.altayctf.ru/images/site/devteam/unk.png')
       q-item-section
         q-item-label Вход
 </template>
@@ -50,7 +50,7 @@ export default class Account extends Mixins(AuthApiRequestImpl, LoginStore) {
     const result = await this.$axios.post<AuthResponse>('/logout')
 
     switch (result.status) {
-      case 404:
+      case 200:
 
         this.$q.localStorage.remove('isLogged')
         this.$q.localStorage.remove('user')

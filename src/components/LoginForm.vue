@@ -35,11 +35,7 @@ export default class LoginForm extends Mixins(LoginStore) {
     this.$v.$touch()
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
     this.$store.state.windowVisible = false
-    const testResponse: User = {
-      login: 'test',
-      post: 'test',
-      idUser: 123
-    }
+
     if (!this.$v.$anyError) {
       const formData = new FormData()
 
@@ -49,15 +45,15 @@ export default class LoginForm extends Mixins(LoginStore) {
       const result = await this.$axios.post<AuthResponse>('/auth', formData)
 
       switch (result.status) {
-        case 404:
+        case 200:
 
           this.$q.localStorage.set('isLogged', true)
-          this.$q.localStorage.set('user', testResponse)
+          this.$q.localStorage.set('user', result as unknown as User)
 
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
           this.setLoginned(true)
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
-          this.setResponseUser(testResponse as unknown as User)
+          this.setResponseUser(result as unknown as User)
 
           this.setVisible(false)
 
