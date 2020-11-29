@@ -28,7 +28,7 @@
               | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
               | commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
               | eveniet doloribus ullam aliquid.
-            q-btn.bg-light-green-7.text-white(@click="popup = true" align="left" flat label="Откликнуться")
+            q-btn.bg-light-green-7.text-white(@click="popup = true" v-if="isUserAnonimous()" align="left" flat label="Откликнуться")
         q-separator
 </template>
 
@@ -38,6 +38,7 @@ import { validationMixin } from 'vuelidate'
 import PhoneValidation from 'src/validation/PhoneValidation'
 import { Vacation } from 'src/models/Vacation'
 import ApiRequestImpl from 'src/requests/implementations/ApiRequestImpl'
+import { User } from 'src/models/auth'
 
 @Component({ mixins: [validationMixin], validations: PhoneValidation })
 export default class VacationsAnonimous extends Mixins(ApiRequestImpl) {
@@ -67,6 +68,11 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl) {
         // todo delete vacantion from page
       }
     }
+  }
+
+  private isUserAnonimous (): boolean {
+    console.log((this.$q.localStorage.getItem('user') as User).role)
+    return (this.$q.localStorage.getItem('user') as User).role === 'anonimous'
   }
 }
 </script>
