@@ -50,12 +50,12 @@ export default class LoginForm extends Mixins(LoginStore) {
         case 200:
 
           this.$q.localStorage.set('isLogged', true)
-          this.$q.localStorage.set('user', result)
+          this.$q.localStorage.set('user', result.data)
 
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
           this.setLoginned(true)
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
-          this.setResponseUser(result as unknown as User)
+          this.setResponseUser(result.data as unknown as User)
 
           this.setVisible(false)
 
