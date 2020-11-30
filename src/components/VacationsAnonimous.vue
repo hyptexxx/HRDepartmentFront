@@ -10,24 +10,22 @@
           q-input(filled v-model="phoneNumber" label="Введите номер телефона" type='text')
           span.text-red-10(v-if="!$v.phoneNumber.required && $v.phoneNumber.$params.required" class="error-label") Обязательно
         q-card-section
-          q-btn.bg-light-green-7.text-white(@click="sendUserRespone(vacantions[0])" flat label="Отправить")
+          q-btn.bg-light-green-7.text-white(@click="sendUserRespone()" flat label="Отправить")
     q-card-section
       .text-h6 Доступные вакансии
       .text-subtitle2 Вакансии
     q-separator(inset='')
     q-card-section
       q-list.rounded-borders(bordered='')
-        q-expansion-item.bg-grey-2(v-for="n in 10")
+        q-expansion-item.bg-grey-2(v-for="vacation in vacantions")
           template(v-slot:header='')
             q-item-section(avatar='')
               q-avatar(icon='work' color='dark' text-color='white')
             q-item-section
-              | Сутенёр
+              | {{vacation.category}}
           q-card(style="display: flex;")
             q-card-section
-              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              | commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
-              | eveniet doloribus ullam aliquid.
+              | {{vacation.requirements}}
             q-btn.bg-light-green-7.text-white(@click="popup = true" v-if="isUserAnonimous()" align="left" flat label="Откликнуться")
         q-separator
 </template>
@@ -44,6 +42,7 @@ import { User } from 'src/models/auth'
 export default class VacationsAnonimous extends Mixins(ApiRequestImpl) {
   private popup = false
   private phoneNumber = ''
+  private idVacation = 0
   private vacantions: Vacation[] = [{
     idVacancy: 0,
     city: 'test',
@@ -60,12 +59,23 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl) {
     this.vacantions = await this.getAllVacationsRequest()
   }
 
-  private async sendUserRespone (vacation: Vacation): Promise<void> {
+  private setIdVacation (idVacation: number): void {
+    this.popup = true
+    this.idVacation = idVacation
+  }
+
+  private async sendUserRespone (): Promise<void> {
     this.$v.$touch()
     if (!this.$v.$anyError) {
-      const result: Vacation = await this.sendUserResponeRequest(this.vacantions[0], this.phoneNumber)
+      const result: Vacation = await this.sendUserResponeRequest(this.idVacation, this.phoneNumber)
       if (result) {
-        // todo delete vacantion from page
+        this.$q.notify({
+          color: 'negative',
+          message: 'Здарова ебать',
+          icon: 'report_problem',
+          progress: true,
+          position: 'bottom'
+        })
       }
     }
   }

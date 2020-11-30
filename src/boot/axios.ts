@@ -46,6 +46,16 @@ export default boot(({ Vue, router }) => {
           position: 'bottom'
         })
       }
+      if (response.status === 400) {
+        Notify.create({
+          color: 'negative',
+          progress: true,
+          caption: 'Произошла ошибка',
+          message: 'Произошла ошибка обработки данных',
+          icon: 'report_problem',
+          position: 'bottom'
+        })
+      }
       if (response.status === 500) {
         Notify.create({
           color: 'negative',
