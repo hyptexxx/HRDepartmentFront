@@ -4,7 +4,7 @@ export interface Vacation {
   category: string
   jobType: string
   role: string
-  requirements: string
+  requirement: string
   openingDate: string
   state: string
   idProject: number

@@ -49,7 +49,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl) {
     category: 'test',
     jobType: 'test',
     role: 'test',
-    requirements: 'test',
+    requirement: 'test',
     openingDate: 'test',
     state: 'test',
     idProject: 0
