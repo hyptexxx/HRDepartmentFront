@@ -26,7 +26,7 @@
           q-card(style="display: flex;")
             q-card-section
               | {{vacation.requirements}}
-            q-btn.bg-light-green-7.text-white(@click="popup = true" v-if="isUserAnonimous()" align="left" flat label="Откликнуться")
+            q-btn.bg-light-green-7.text-white(@click="setIdVacation(vacation.idVacancy)" v-if="isUserAnonimous()" align="left" flat label="Откликнуться")
         q-separator
 </template>
 
