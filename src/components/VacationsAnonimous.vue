@@ -32,7 +32,6 @@
               | {{vacation.requirement}}
             q-separator(inset='')
             q-card-section
-              | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
               q-chip(square='' color='purple' text-color='white' :label='vacation.category')
               q-chip(square='' color='purple' text-color='white' :label='vacation.jobType')
             q-card-actions
