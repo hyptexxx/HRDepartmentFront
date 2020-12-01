@@ -1,5 +1,5 @@
 export interface Vacation {
-  idVacancy: number
+  id: number
   city: string
   category: string
   jobType: string

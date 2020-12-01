@@ -55,7 +55,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
   private phoneNumber = ''
   private idVacation = 0
   private vacantions: Vacation[] = [{
-    idVacancy: 0,
+    id: 0,
     city: 'ZALUPYANSK',
     category: 'каво-то',
     jobType: 'что-то',
