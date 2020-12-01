@@ -17,7 +17,7 @@
     q-separator(inset='')
     q-card-section
       q-list.rounded-borders(bordered='')
-        q-expansion-item.bg-grey-2(v-for="vacation in vacantions")
+        q-expansion-item.bg-grey-2(v-for="vacation in vacantions" default-opened)
           template(v-slot:header='')
             q-item-section(avatar='')
               q-chip(square='' color='white' text-color='black' :label='vacation.role')
@@ -82,7 +82,6 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
   private asd (): void {
     this.isLoginned = !this.responseUser
   }
-
   private async sendUserRespone (): Promise<void> {
     this.$v.$touch()
     if (!this.$v.$anyError) {
