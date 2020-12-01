@@ -34,6 +34,10 @@ module.exports = configure(function (ctx) {
       'app.css'
     ],
 
+    output: {
+      filename: 'bundle.js'
+    },
+
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
       // 'ionicons-v4',
