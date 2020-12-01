@@ -24,11 +24,11 @@
           q-input(filled v-model="vacation.role" label="Введите роль" type='text')
           q-input(filled v-model="vacation.requirement" label="Введите описание" type='text')
         q-card-section(side='')
-          q-btn.bg-light-green-7.text-white(@click="sendAddRequest" v-if="isLoginned" flat label="Добавить")
+          q-btn.bg-light-green-7.text-white(@click="sendAddRequest" flat label="Добавить")
     q-card-section
       .text-h6 Доступные вакансии
       .text-subtitle2 Вакансии
-      q-btn.bg-light-green-7.text-white(@click="isAddVisible = true" flat label="Добавить вакансию")
+      q-btn.bg-light-green-7.text-white(@click="isAddVisible = true" v-if="isLoginned" flat label="Добавить вакансию")
     q-separator(inset='')
     q-card-section
       q-list.rounded-borders(bordered='')
