@@ -47,8 +47,8 @@
               | {{vacation.requirement}}
             q-separator(inset='')
             q-card-section
-              q-chip(square='' color='DBE8D1' text-color='black' :label='vacation.category')
-              q-chip(square='' color='DBE8D1' text-color='black' :label='vacation.jobType')
+              q-chip(square='' color='#DBE8D1' text-color='black' :label='vacation.category')
+              q-chip(square='' color='#DBE8D1' text-color='black' :label='vacation.jobType')
             q-card-actions
               q-btn.bg-light-green-7.text-white(@click="setIdVacation(vacation.id)" v-if="isLoginned" align="left" flat label="Откликнуться")
         q-separator
@@ -78,7 +78,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     role: 'daun',
     requirement: 'TREBOAS;JHASDLFJHQLIJKREHEWKHJLQWERHJT',
     openingDate: '10-123-23',
-    state: 'test',
+    state: 0,
     idProject: 0
   }]
 
@@ -90,7 +90,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     role: '',
     requirement: '',
     openingDate: new Date().toUTCString(),
-    state: '1',
+    state: 0,
     idProject: 100
   }
 
