@@ -7,10 +7,10 @@
           q-space
           q-btn(icon='close' flat='' round='' dense='' v-close-popup='')
         q-card-section
-          q-input(filled v-model="phoneNumber" label="Введите номер телефона" type='text' ref="phone")
+          q-input(filled v-model="phoneNumber" label="Введите номер телефона" type='text' ref="phone" @keydown.enter="sendUserRespone")
           span.text-red-10(v-if="!$v.phoneNumber.required && $v.phoneNumber.$params.required" class="error-label") Обязательно
         q-card-section
-          q-btn.bg-light-green-7.text-white(@click="sendUserRespone" @keydown.enter="sendUserRespone" flat label="Отправить")
+          q-btn.bg-light-green-7.text-white(@click="sendUserRespone" flat label="Отправить")
     q-card-section
       .text-h6 Доступные вакансии
       .text-subtitle2 Вакансии
