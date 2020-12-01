@@ -82,6 +82,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
   private asd (): void {
     this.isLoginned = !this.responseUser
   }
+
   private async sendUserRespone (): Promise<void> {
     this.$v.$touch()
     if (!this.$v.$anyError) {
