@@ -35,7 +35,7 @@
               q-chip(square='' color='purple' text-color='white' :label='vacation.category')
               q-chip(square='' color='purple' text-color='white' :label='vacation.jobType')
             q-card-actions
-              q-btn.bg-light-green-7.text-white(@click="setIdVacation(vacation.idVacancy)" v-if="isLoginned" align="left" flat label="Откликнуться")
+              q-btn.bg-light-green-7.text-white(@click="setIdVacation(vacation.id)" v-if="isLoginned" align="left" flat label="Откликнуться")
         q-separator
 </template>
 
@@ -75,8 +75,6 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
   private setIdVacation (idVacation: number): void {
     this.popup = true
     this.idVacation = idVacation
-    console.log(this.vacantions)
-    console.log(idVacation)
   }
 
   @Watch('responseUser')
