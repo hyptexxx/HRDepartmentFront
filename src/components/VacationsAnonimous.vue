@@ -75,7 +75,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
   private setIdVacation (idVacation: number): void {
     this.popup = true
     this.idVacation = idVacation
-    console.log(this.idVacation)
+    console.log(this.vacantions)
     console.log(idVacation)
   }
 
