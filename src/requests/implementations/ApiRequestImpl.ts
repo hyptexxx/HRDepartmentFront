@@ -20,4 +20,14 @@ export default class ApiRequestImpl extends Vue implements ApiRequestService {
 
     return result.data
   }
+
+  public async addRequest (vacation: Vacation): Promise<Vacation> {
+    const formData = new FormData()
+
+    formData.append('vacancy', JSON.stringify(vacation))
+
+    const result = await this.$axios.post<Vacation>('/vacancy/add', formData)
+
+    return result.data
+  }
 }
