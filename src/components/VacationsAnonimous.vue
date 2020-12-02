@@ -98,7 +98,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
   // eslint-disable-next-line @typescript-eslint/require-await
   private async mounted (): Promise<void> {
     this.isLoginned = !(this.$q.localStorage.getItem('user') as User)
-    // this.vacantions = await this.getAllVacationsRequest()
+    this.vacantions = await this.getAllVacationsRequest()
   }
 
   private setIdVacation (idVacation: number): void {
@@ -108,7 +108,19 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
 
   private async deleteVacantion (id: number): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
-    await this.deleteVacancy(id)
+    const result = await this.$axios.delete('/vacancy', { data: { idVacancy: id } })
+    switch (result.status) {
+      case 200:
+        this.vacantions = this.vacantions?.filter((e: Vacation) => { return e.id !== id })
+        this.$q.notify({
+          type: 'positive',
+          message: 'Запись удалена',
+          icon: 'report_problem',
+          progress: true,
+          position: 'bottom'
+        })
+        break
+    }
   }
 
   @Watch('responseUser')
