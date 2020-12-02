@@ -13,7 +13,7 @@ export default class ApiRequestImpl extends Vue implements ApiRequestService {
   public async sendUserResponeRequest (idVacation: number, phoneNumber: string): Promise<Vacation> {
     const formData = new FormData()
 
-    formData.append('idVacation', idVacation.toString())
+    formData.append('idVacancy', idVacation.toString())
     formData.append('phoneNumber', phoneNumber)
 
     const result = await this.$axios.post<Vacation>('/vacancy', formData)
