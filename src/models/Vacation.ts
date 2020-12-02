@@ -6,6 +6,6 @@ export interface Vacation {
   role: string
   requirement: string
   openingDate: string
-  state: number
-  idProject: number
+  stateId: number
+  projectId: number
 }

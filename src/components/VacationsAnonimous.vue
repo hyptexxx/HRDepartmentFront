@@ -11,7 +11,7 @@
           span.text-red-10(v-if="!$v.phoneNumber.required && $v.phoneNumber.$params.required" class="error-label") Обязательно
         q-card-section(side='')
           q-btn.bg-light-green-7.text-white(@click="sendUserRespone" flat label="Отправить")
-    q-dialog(v-model='isAddVisible')
+    q-dialog(v-model='!isAddVisible')
       q-card
         q-card-section.row.items-center.q-pb-none
           .text-h6 Заполните форму добавления вакансии
@@ -78,8 +78,8 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     role: 'daun',
     requirement: 'TREBOAS;JHASDLFJHQLIJKREHEWKHJLQWERHJT',
     openingDate: '10-123-23',
-    state: 0,
-    idProject: 0
+    stateId: 0,
+    projectId: 0
   }]
 
   private vacation: Vacation= {
@@ -89,9 +89,9 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     jobType: '',
     role: '',
     requirement: '',
-    openingDate: new Date().toUTCString(),
-    state: 0,
-    idProject: 100
+    openingDate: '2020-10-10',
+    stateId: 0,
+    projectId: 100
   }
 
   // eslint-disable-next-line @typescript-eslint/require-await
