@@ -72,7 +72,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
   private phoneNumber = ''
   private idVacation = 234
   private vacantions!: Vacation[] | null = [{
-    id: 0,
+    id: 12,
     city: 'ZALUPYANSK',
     category: 'каво-то',
     jobType: 'что-то',
@@ -98,17 +98,17 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
   // eslint-disable-next-line @typescript-eslint/require-await
   private async mounted (): Promise<void> {
     this.isLoginned = !(this.$q.localStorage.getItem('user') as User)
-    this.vacantions = await this.getAllVacationsRequest()
+    // this.vacantions = await this.getAllVacationsRequest()
   }
 
   private setIdVacation (idVacation: number): void {
-    this.popup = true;
-    (this.$refs.phone as HTMLInputElement).focus()
+    this.popup = true
     this.idVacation = idVacation
   }
 
   private async deleteVacantion (id: number): Promise<void> {
-    await this.deteteVacancy(id)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
+    await this.deleteVacancy(id)
   }
 
   @Watch('responseUser')

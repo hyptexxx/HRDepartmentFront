@@ -4,5 +4,5 @@ export interface ApiRequestService{
   getAllVacationsRequest (): Promise<Vacation[]>
   sendUserResponeRequest (idVacation: number, phoneNumber: string): Promise<Vacation>
   addRequest (vacation: Vacation): Promise<Vacation>
-  deteteVacancy (id: number): Promise<void>
+  deleteVacancy (id: number): Promise<void>
 }
