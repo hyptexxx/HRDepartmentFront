@@ -31,6 +31,20 @@
           q-input(filled v-model="vacation.requirement" label="Введите описание" type='text')
         q-card-section(side='')
           q-btn.bg-light-green-7.text-white(@click="sendAddRequest" flat label="Добавить")
+    q-dialog(v-model='isEditVisible')
+      q-card
+        q-card-section.row.items-center.q-pb-none
+          .text-h6 Редактирование вакансии
+          q-space
+          q-btn(icon='close' flat='' round='' dense='' v-close-popup='')
+        q-card-section
+          q-input(filled v-model="vacation.city" label="Введите город" type='text')
+          q-input(filled v-model="vacation.category" label="Введите категорию" type='text')
+          q-input(filled v-model="vacation.jobType" label="Введите тип вакансии" type='text')
+          q-input(filled v-model="vacation.role" label="Введите роль" type='text')
+          q-input(filled v-model="vacation.requirement" label="Введите описание" type='text')
+        q-card-section(side='')
+          q-btn.bg-light-green-7.text-white(@click="editRequest" flat label="Внести изменения")
     q-card-section
       .text-h6 Доступные вакансии
       .text-subtitle2 Вакансии
@@ -43,8 +57,8 @@
             q-item-section(avatar='')
               q-chip(square='' color='white' text-color='black' :label='vacation.role')
             q-item-section
-            q-chip(square='' color='#DBE8D1' text-color='black' icon='home' :label='vacation.city')
-            q-chip(square='' color='#EEE6FF' text-color='black' icon='alarm' :label='vacation.openingDate')
+            q-chip.bg-light-green-1(square='' color='#DBE8D1' text-color='black' icon='home' :label='vacation.city')
+            q-chip.bg-light-blue-1(square='' color='#EEE6FF' text-color='black' icon='alarm' :label='vacation.openingDate')
             q-item-section(side='').text-black
           q-card
             q-card-section
@@ -53,11 +67,12 @@
               | {{vacation.requirement}}
             q-separator(inset='')
             q-card-section
-              q-chip(square='' color='#DBE8D1' text-color='black' :label='vacation.category')
-              q-chip(square='' color='#DBE8D1' text-color='black' :label='vacation.jobType')
+              q-chip.bg-light-green-1(square='' color='#DBE8D1' text-color='black' :label='vacation.category')
+              q-chip.bg-light-green-1(square='' color='#DBE8D1' text-color='black' :label='vacation.jobType')
             q-card-actions
               q-btn.bg-light-green-7.text-white(@click="setIdVacation(vacation.id)" v-if="isLoginned" align="left" flat label="Откликнуться")
               q-btn.bg-light-green-7.text-white(@click="deleteVacantion(vacation.id)" v-if="!isLoginned" align="left" flat label="Удалить")
+              q-btn.bg-light-green-7.text-white(@click="editVacantion(vacation)" v-if="!isLoginned" align="left" flat label="Редактировать")
         q-separator
 </template>
 
@@ -75,7 +90,8 @@ import { Employee } from 'src/models/Emploee'
 export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStore) {
   private popup = false
   private isLoginned = false
-  private isAddVisible = false;
+  private isAddVisible = false
+  private isEditVisible = false
   private phoneNumber = ''
   private idVacation = 234
 
@@ -98,7 +114,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     projectId: 0
   }]
 
-  private vacation: Vacation= {
+  private vacation: Vacation | null = {
     id: 0,
     city: '',
     category: '',
@@ -116,9 +132,33 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     this.vacantions = await this.getAllVacationsRequest()
   }
 
+  private editVacantion (idVacation: Vacation): void {
+    this.isEditVisible = true
+    this.vacation = idVacation
+  }
+
   private setIdVacation (idVacation: number): void {
     this.popup = true
     this.idVacation = idVacation
+  }
+
+  private async editRequest (): Promise<void> {
+    if (this.vacation) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
+      const result: Vacation = await this.editRequestSender(this.vacation)
+      if (result && this.vacantions) {
+        this.vacantions = this.vacantions?.filter((e: Vacation) => { return e.id !== result.id })
+        this.vacantions.push(result)
+        this.$q.notify({
+          type: 'positive',
+          message: 'Заявка успешно отправлена',
+          icon: 'report_problem',
+          progress: true,
+          position: 'bottom'
+        })
+        this.popup = false
+      }
+    }
   }
 
   private async deleteVacantion (id: number): Promise<void> {
@@ -129,7 +169,8 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
         if (this.vacantions) {
           this.vacantions = this.vacantions?.filter((e: Vacation) => { return e.id !== id })
         }
-
+        this.isAddVisible = false
+        this.vacation = null
         this.$q.notify({
           type: 'positive',
           message: 'Запись удалена',
@@ -148,26 +189,29 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
 
   private async sendAddRequest (): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
-    const vacancy: Vacation = await this.addRequest(this.vacation)
-    if (vacancy) {
-      if (this.vacantions) {
-        this.vacantions.push(vacancy)
+    let vacancy: Vacation
+    if (this.vacation) {
+      vacancy = await this.addRequest(this.vacation)
+      if (vacancy) {
+        if (this.vacantions) {
+          this.vacantions.push(vacancy)
+        }
+        this.$q.notify({
+          type: 'positive',
+          message: 'Запись добавлена',
+          icon: 'report_problem',
+          progress: true,
+          position: 'bottom'
+        })
+      } else {
+        this.$q.notify({
+          color: 'negative',
+          message: 'Поля не заполнены',
+          icon: 'report_problem',
+          progress: true,
+          position: 'bottom'
+        })
       }
-      this.$q.notify({
-        type: 'positive',
-        message: 'Запись добавлена',
-        icon: 'report_problem',
-        progress: true,
-        position: 'bottom'
-      })
-    } else {
-      this.$q.notify({
-        color: 'negative',
-        message: 'Поля не заполнены',
-        icon: 'report_problem',
-        progress: true,
-        position: 'bottom'
-      })
     }
   }
 

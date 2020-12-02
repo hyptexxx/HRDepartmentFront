@@ -35,4 +35,14 @@ export default class ApiRequestImpl extends Vue implements ApiRequestService {
   public async deleteVacancy (id: number): Promise<void> {
     await this.$axios.delete('/vacancy', { data: { idVacancy: id } })
   }
+
+  public async editRequestSender (vacation: Vacation): Promise<Vacation> {
+    const formData = new FormData()
+
+    formData.append('vacancy', JSON.stringify(vacation))
+
+    const result = await this.$axios.post<Vacation>('/vacancy/edit', formData)
+
+    return result.data
+  }
 }
