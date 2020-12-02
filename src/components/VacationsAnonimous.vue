@@ -90,7 +90,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     role: '',
     requirement: '',
     openingDate: '2020-10-10',
-    stateId: 0,
+    stateId: 1,
     projectId: 100
   }
 
