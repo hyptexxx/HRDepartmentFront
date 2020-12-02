@@ -123,7 +123,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
 
   private async deleteVacantion (id: number): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
-    const result = await this.$axios.delete('/vacancy', { data: { idVacancy: id } })
+    const result = await this.$axios.delete(`/vacancy/${id}`)
     switch (result.status) {
       case 200:
         if (this.vacantions) {
