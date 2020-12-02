@@ -30,4 +30,8 @@ export default class ApiRequestImpl extends Vue implements ApiRequestService {
 
     return result.data
   }
+
+  public async deteteVacancy (id: number): Promise<void> {
+    await this.$axios.delete('/vacancy', { data: { idVacancy: id } })
+  }
 }

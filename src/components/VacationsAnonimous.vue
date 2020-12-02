@@ -51,6 +51,7 @@
               q-chip(square='' color='#DBE8D1' text-color='black' :label='vacation.jobType')
             q-card-actions
               q-btn.bg-light-green-7.text-white(@click="setIdVacation(vacation.id)" v-if="isLoginned" align="left" flat label="Откликнуться")
+              q-btn.bg-light-green-7.text-white(@click="deleteVacantion(vacation.id)" v-if="!isLoginned" align="left" flat label="Удалить")
         q-separator
 </template>
 
@@ -69,8 +70,8 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
   private isLoginned = false
   private isAddVisible = false;
   private phoneNumber = ''
-  private idVacation = 0
-  private vacantions: Vacation[] = [{
+  private idVacation = 234
+  private vacantions!: Vacation[] | null = [{
     id: 0,
     city: 'ZALUPYANSK',
     category: 'каво-то',
@@ -106,8 +107,12 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     this.idVacation = idVacation
   }
 
+  private async deleteVacantion (id: number): Promise<void> {
+    await this.deteteVacancy(id)
+  }
+
   @Watch('responseUser')
-  private asd (): void {
+  private responseUserWatch (): void {
     this.isLoginned = !this.responseUser
   }
 
@@ -135,6 +140,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
   }
 
   private async sendUserRespone (): Promise<void> {
+    console.log(this.idVacation)
     this.$v.$touch()
     if (!this.$v.$anyError) {
       const result: Vacation = await this.sendUserResponeRequest(this.idVacation, this.phoneNumber)
