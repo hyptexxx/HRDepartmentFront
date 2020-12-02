@@ -1,7 +1,10 @@
 import { required } from 'vuelidate/lib/validators'
 
 export default {
-  phoneNumber: {
-    required
+  emploee: {
+    city: { required },
+    name: { required },
+    letter: { required },
+    phoneNumber: { required }
   }
 }

@@ -1,6 +1,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { ApiRequestService } from 'src/requests/interfaces/ApiRequestService'
 import { Vacation } from 'src/models/Vacation'
+import { Employee } from 'src/models/Emploee'
 
 @Component
 export default class ApiRequestImpl extends Vue implements ApiRequestService {
@@ -10,11 +11,11 @@ export default class ApiRequestImpl extends Vue implements ApiRequestService {
     return result.data
   }
 
-  public async sendUserResponeRequest (idVacation: number, phoneNumber: string): Promise<Vacation> {
+  public async sendUserResponeRequest (idVacation: number, employee: Employee): Promise<Vacation> {
     const formData = new FormData()
 
     formData.append('idVacancy', idVacation.toString())
-    formData.append('phoneNumber', phoneNumber)
+    formData.append('phoneNumber', JSON.stringify(employee))
 
     const result = await this.$axios.post<Vacation>('/vacancy', formData)
 

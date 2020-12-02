@@ -7,8 +7,14 @@
           q-space
           q-btn(icon='close' flat='' round='' dense='' v-close-popup='')
         q-card-section
-          q-input(filled v-model="phoneNumber" label="Введите номер телефона" type='text' ref="phone" @keydown.enter="sendUserRespone")
-          span.text-red-10(v-if="!$v.phoneNumber.required && $v.phoneNumber.$params.required" class="error-label") Обязательно
+          q-input(filled v-model="emploee.city" label="Город" type='text' ref="phone" @keydown.enter="sendUserRespone")
+          span.text-red-10(v-if="!$v.emploee.city.required && $v.emploee.city.$params.required" class="error-label") Обязательно
+          q-input(filled v-model="emploee.name" label="ФИО" type='text' ref="phone" @keydown.enter="sendUserRespone")
+          span.text-red-10(v-if="!$v.emploee.name.required && $v.emploee.name.$params.required" class="error-label") Обязательно
+          q-input(filled v-model="emploee.letter" label="Сопроводительное письмо" type='text' ref="phone" @keydown.enter="sendUserRespone")
+          span.text-red-10(v-if="!$v.emploee.letter.required && $v.emploee.letter.$params.required" class="error-label") Обязательно
+          q-input(filled v-model="emploee.phoneNumber" label="Номер телефона" type='text' ref="phone" @keydown.enter="sendUserRespone")
+          span.text-red-10(v-if="!$v.emploee.phoneNumber.required && $v.emploee.phoneNumber.$params.required" class="error-label") Обязательно
         q-card-section(side='')
           q-btn.bg-light-green-7.text-white(@click="sendUserRespone" flat label="Отправить")
     q-dialog(v-model='isAddVisible')
@@ -63,6 +69,7 @@ import { Vacation } from 'src/models/Vacation'
 import ApiRequestImpl from 'src/requests/implementations/ApiRequestImpl'
 import { User } from 'src/models/auth'
 import LoginStore from 'src/store/LoginStore'
+import { Employee } from 'src/models/Emploee'
 
 @Component({ mixins: [validationMixin], validations: PhoneValidation })
 export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStore) {
@@ -71,7 +78,15 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
   private isAddVisible = false;
   private phoneNumber = ''
   private idVacation = 234
-  private vacantions!: Vacation[] | null = [{
+
+  private emploee: Employee = {
+    city: '',
+    name: '',
+    letter: '',
+    phoneNumber: ''
+  }
+
+  private vacantions: Vacation[] | null = [{
     id: 12,
     city: 'ZALUPYANSK',
     category: 'каво-то',
@@ -111,7 +126,10 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     const result = await this.$axios.delete('/vacancy', { data: { idVacancy: id } })
     switch (result.status) {
       case 200:
-        this.vacantions = this.vacantions?.filter((e: Vacation) => { return e.id !== id })
+        if (this.vacantions) {
+          this.vacantions = this.vacantions?.filter((e: Vacation) => { return e.id !== id })
+        }
+
         this.$q.notify({
           type: 'positive',
           message: 'Запись удалена',
@@ -132,7 +150,9 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
     const vacancy: Vacation = await this.addRequest(this.vacation)
     if (vacancy) {
-      this.vacantions.push(vacancy)
+      if (this.vacantions) {
+        this.vacantions.push(vacancy)
+      }
       this.$q.notify({
         type: 'positive',
         message: 'Запись добавлена',
@@ -152,10 +172,9 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
   }
 
   private async sendUserRespone (): Promise<void> {
-    console.log(this.idVacation)
     this.$v.$touch()
     if (!this.$v.$anyError) {
-      const result: Vacation = await this.sendUserResponeRequest(this.idVacation, this.phoneNumber)
+      const result: Vacation = await this.sendUserResponeRequest(this.idVacation, this.emploee)
       if (result) {
         this.$q.notify({
           type: 'positive',
@@ -166,6 +185,14 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
         })
         this.popup = false
       }
+    } else {
+      this.$q.notify({
+        color: 'negative',
+        message: 'Поля не заполнены',
+        icon: 'report_problem',
+        progress: true,
+        position: 'bottom'
+      })
     }
   }
 
