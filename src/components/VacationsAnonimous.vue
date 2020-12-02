@@ -11,7 +11,7 @@
           span.text-red-10(v-if="!$v.phoneNumber.required && $v.phoneNumber.$params.required" class="error-label") Обязательно
         q-card-section(side='')
           q-btn.bg-light-green-7.text-white(@click="sendUserRespone" flat label="Отправить")
-    q-dialog(v-model='!isAddVisible')
+    q-dialog(v-model='isAddVisible')
       q-card
         q-card-section.row.items-center.q-pb-none
           .text-h6 Заполните форму добавления вакансии
@@ -28,7 +28,7 @@
     q-card-section
       .text-h6 Доступные вакансии
       .text-subtitle2 Вакансии
-      q-btn.bg-light-green-7.text-white(@click="isAddVisible = true" v-if="isLoginned" flat label="Добавить вакансию")
+      q-btn.bg-light-green-7.text-white(@click="isAddVisible = true" v-if="!isLoginned" flat label="Добавить вакансию")
     q-separator(inset='')
     q-card-section
       q-list.rounded-borders(bordered='')
