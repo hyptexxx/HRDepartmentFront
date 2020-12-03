@@ -85,9 +85,9 @@
               q-chip.bg-light-green-1(square='' color='#DBE8D1' text-color='black' :label='vacation.jobType')
             q-card-actions
               q-btn.bg-light-green-7.text-white(@click="setIdVacation(vacation.id)" v-if="isLoginned" align="left" flat label="Откликнуться")
-              q-btn.bg-light-green-7.text-white(@click="deleteVacantion(vacation.id)" v-if="!isLoginned" align="left" flat label="Удалить")
+              q-btn.bg-red-7.text-white(@click="deleteVacantion(vacation.id)" v-if="!isLoginned" align="left" flat label="Удалить")
               q-btn.bg-light-green-7.text-white(@click="editVacantion(vacation)" v-if="!isLoginned" align="left" flat label="Редактировать")
-              q-btn.bg-light-green-7.text-white(@click="showEmploeeOnVacantion(vacation.id)" v-if="!isLoginned" align="left" flat label="Отобразить откликнувшихся")
+              q-btn.bg-purple.text-white(@click="showEmploeeOnVacantion(vacation.id)" v-if="!isLoginned" align="left" flat label="Отобразить откликнувшихся")
         q-separator
 </template>
 

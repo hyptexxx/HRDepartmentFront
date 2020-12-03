@@ -15,7 +15,7 @@ export default class ApiRequestImpl extends Vue implements ApiRequestService {
     const formData = new FormData()
 
     formData.append('idVacancy', idVacation.toString())
-    formData.append('vacancy', JSON.stringify(employee))
+    formData.append('potentialEmployee', JSON.stringify(employee))
 
     const result = await this.$axios.post<Vacation>('/vacancy', formData)
 
