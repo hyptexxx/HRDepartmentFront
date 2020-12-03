@@ -45,6 +45,20 @@
           q-input(filled v-model="vacation.requirement" label="Введите описание" type='text')
         q-card-section(side='')
           q-btn.bg-light-green-7.text-white(@click="editRequest" flat label="Внести изменения")
+    q-dialog(v-model='dialog' persistent='' :maximized='maximizedToggle' transition-show='slide-up' transition-hide='slide-down')
+      q-card.bg-white.text-black
+        q-bar
+          q-space
+          q-btn(dense='' flat='' icon='minimize' @click='maximizedToggle = false' :disable='!maximizedToggle')
+            q-tooltip(v-if='maximizedToggle' content-class='bg-white text-primary') Minimize
+          q-btn(dense='' flat='' icon='crop_square' @click='maximizedToggle = true' :disable='maximizedToggle')
+            q-tooltip(v-if='!maximizedToggle' content-class='bg-white text-primary') Maximize
+          q-btn(dense='' flat='' icon='close' v-close-popup='')
+            q-tooltip(content-class='bg-white text-primary') Close
+        q-card-section
+          .text-h6 Alert
+        q-card-section.q-pt-none
+          q-table(title='Treats' :data='data' :columns='columns' row-key='name' :loading="loading")
     q-card-section
       .text-h6 Доступные вакансии
       .text-subtitle2 Вакансии
@@ -73,6 +87,7 @@
               q-btn.bg-light-green-7.text-white(@click="setIdVacation(vacation.id)" v-if="isLoginned" align="left" flat label="Откликнуться")
               q-btn.bg-light-green-7.text-white(@click="deleteVacantion(vacation.id)" v-if="!isLoginned" align="left" flat label="Удалить")
               q-btn.bg-light-green-7.text-white(@click="editVacantion(vacation)" v-if="!isLoginned" align="left" flat label="Редактировать")
+              q-btn.bg-light-green-7.text-white(@click="showEmploeeOnVacantion(vacation.id)" v-if="!isLoginned" align="left" flat label="Отобразить откликнувшихся")
         q-separator
 </template>
 
@@ -90,8 +105,11 @@ import { Employee } from 'src/models/Emploee'
 export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStore) {
   private popup = false
   private isLoginned = false
+  private dialog = false
   private isAddVisible = false
   private isEditVisible = false
+  private maximizedToggle = true
+  private loading = false
   private phoneNumber = ''
   private idVacation = 234
 
@@ -101,6 +119,29 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     letter: '',
     phoneNumber: ''
   }
+
+  private columns = [
+    {
+      name: 'name',
+      required: true,
+      label: 'ФИО',
+      align: 'left',
+      field: 'row => row.name',
+      sortable: true
+    },
+    { name: 'Номер телефона', align: 'center', label: 'Номер телефона', field: 'phoneNumber', sortable: true },
+    { name: 'Город', label: 'Город', field: 'city', sortable: true },
+    { name: 'Сопроводительное письмо', label: 'letter', field: 'letter' }
+  ]
+
+private data: Employee[] = [
+  {
+    city: '',
+    name: '',
+    letter: '',
+    phoneNumber: ''
+  }
+]
 
   private vacantions: Vacation[] | null = [{
     id: 12,
@@ -130,6 +171,25 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
   private async mounted (): Promise<void> {
     this.isLoginned = !(this.$q.localStorage.getItem('user') as User)
     this.vacantions = await this.getAllVacationsRequest()
+  }
+
+  private async showEmploeeOnVacantion (idVacancy: number): Promise<void> {
+    this.dialog = true
+    this.loading = true
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
+    const resultEmployeeList: Employee[] = await this.getAllEmploee(idVacancy)
+    if (resultEmployeeList.length) {
+      this.data = resultEmployeeList
+    } else {
+      this.$q.notify({
+        type: 'positive',
+        message: 'Ничего не найдено',
+        icon: 'report_problem',
+        progress: true,
+        position: 'bottom'
+      })
+    }
+    this.loading = false
   }
 
   private editVacantion (idVacation: Vacation): void {

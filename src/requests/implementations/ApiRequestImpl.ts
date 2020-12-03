@@ -45,4 +45,14 @@ export default class ApiRequestImpl extends Vue implements ApiRequestService {
 
     return result.data
   }
+
+  public async getAllEmploee (idVacancy: number): Promise<Employee[]> {
+    const result = await this.$axios.get<Employee[]>('/vacancy/potentialEmployee/', {
+      params: {
+        vacancyId: idVacancy
+      }
+    })
+
+    return result.data
+  }
 }
