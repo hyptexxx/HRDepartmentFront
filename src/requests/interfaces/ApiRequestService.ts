@@ -1,5 +1,6 @@
 import { Vacation } from 'src/models/Vacation'
 import { Employee } from 'src/models/Emploee'
+import { EmployeeHired } from 'src/models/EmployeeHired'
 export interface ApiRequestService{
 
   getAllVacationsRequest (): Promise<Vacation[]>
@@ -13,5 +14,9 @@ export interface ApiRequestService{
   deleteVacancy (id: number): Promise<void>
 
   getAllEmploee(idVacancy: number): Promise<Employee[]>
+
+  getAllEmploeeInWork(): Promise<EmployeeHired[]>
+
+  deleteEmployeeRequest(employeeId: number[]): Promise<void>
 
 }

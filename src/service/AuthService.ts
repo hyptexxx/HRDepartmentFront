@@ -1,11 +1,34 @@
 import { Route } from 'vue-router'
 import { LocalStorage } from 'quasar'
+import { Vue } from 'vue-property-decorator'
+import { User } from 'src/models/auth'
 
-export default class AuthService {
-  public checkLoggedIn = (to: Route, from: Route, next: (path?: string) => void): void => {
+export default class AuthService extends Vue {
+  public checkLoggedInAndRole = (to: Route, from: Route, next: (path?: string) => void): void => {
     if (!(LocalStorage.getItem('isLogged') as boolean)) {
-      next('/login')
+      this.$q.notify({
+        color: 'negative',
+        message: 'Выполните авторизацию',
+        icon: 'report_problem',
+        progress: true,
+        position: 'bottom'
+      })
+      next('/vacation')
     } else {
+      // const user: User = (LocalStorage.getItem('user')) as User
+      // if (user) {
+      //   if (user.role === 'hr') {
+      //     next()
+      //   } else {
+      //     this.$q.notify({
+      //       color: 'negative',
+      //       message: 'Недостаточно прав',
+      //       icon: 'report_problem',
+      //       progress: true,
+      //       position: 'bottom'
+      //     })
+      //   }
+      // }
       next()
     }
   };

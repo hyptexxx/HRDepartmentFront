@@ -35,7 +35,7 @@ export default class Account extends Mixins(ApiRequestImpl, LoginStore) {
     login: '',
     post: '',
     idUser: 0,
-    role: 'admin'
+    role: 'hr'
   }
 
   @Watch('loginned')

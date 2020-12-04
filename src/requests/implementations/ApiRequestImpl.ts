@@ -2,6 +2,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import { ApiRequestService } from 'src/requests/interfaces/ApiRequestService'
 import { Vacation } from 'src/models/Vacation'
 import { Employee } from 'src/models/Emploee'
+import { EmployeeHired } from 'src/models/EmployeeHired'
 
 @Component
 export default class ApiRequestImpl extends Vue implements ApiRequestService {
@@ -54,5 +55,15 @@ export default class ApiRequestImpl extends Vue implements ApiRequestService {
     })
 
     return result.data
+  }
+
+  public async getAllEmploeeInWork (): Promise<EmployeeHired[]> {
+    const result = await this.$axios.get<EmployeeHired[]>('/employee')
+
+    return result.data
+  }
+
+  public async deleteEmployeeRequest (employeeId: number[]): Promise<void> {
+    await this.$axios.delete('/vacancy', { data: { employeeId: JSON.stringify(employeeId) } })
   }
 }

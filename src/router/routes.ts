@@ -3,12 +3,13 @@ import VacationsAnonimous from 'components/VacationsAnonimous.vue'
 import MainLayout from 'layouts/MainLayout.vue'
 import Index from 'pages/Index.vue'
 import AuthService from 'src/service/AuthService'
+import HRpage from 'components/HRpage.vue'
 
 const authService = new AuthService()
 
 const routes: RouteConfig[] = [
   {
-    path: '/vacantions',
+    path: '/vacation',
     components: {
       default: MainLayout
     },
@@ -17,7 +18,17 @@ const routes: RouteConfig[] = [
         path: '',
         component: Index,
         children: [
-          { name: 'vacantions', path: '/vacantions', component: VacationsAnonimous }
+          {
+            name: 'vacation',
+            path: '/vacation',
+            component: VacationsAnonimous
+          },
+          {
+            beforeEnter: authService.checkLoggedInAndRole,
+            name: 'employee',
+            path: '/employee',
+            component: HRpage
+          }
         ]
       }
     ]

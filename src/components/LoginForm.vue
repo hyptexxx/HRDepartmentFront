@@ -31,6 +31,13 @@ export default class LoginForm extends Mixins(LoginStore) {
     password: ''
   }
 
+  private user: User | null = {
+    login: '',
+    post: '',
+    idUser: 0,
+    role: 'hr'
+  }
+
   // руководитель - текущие сотрудники (нет редактирования)
   // хр - текущие (crud) + те кто оставил заявки (принять отклонить)
   // бухгатлер - текущие сотрудники (просмотр) + зарплаты (редактирование)
@@ -47,7 +54,7 @@ export default class LoginForm extends Mixins(LoginStore) {
       const result = await this.$axios.post<AuthResponse>('/auth', formData)
 
       switch (result.status) {
-        case 200:
+        case 404:
 
           this.$q.localStorage.set('isLogged', true)
           this.$q.localStorage.set('user', result.data)

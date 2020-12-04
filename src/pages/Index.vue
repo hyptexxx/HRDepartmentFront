@@ -8,8 +8,8 @@ q-layout(view='hHr lpr fff')
       q-toolbar-title
         |  Отдел кадров
     q-tabs(align='left')
-      q-route-tab(to='/vacantions' label='Вакансии')
-      q-route-tab(to='/page2' label='Page Two')
+      q-route-tab(to='/vacation' label='Вакансии')
+      q-route-tab(to='/employee' label='Нанятые сотрудники')
   q-drawer.bg-amber-5(v-model='left' side='left' content-class="bg-grey-9 text-white" bordered='')
     account
   q-page-container

@@ -56,9 +56,9 @@
           q-btn(dense='' flat='' icon='close' v-close-popup='')
             q-tooltip(content-class='bg-white text-primary') Close
         q-card-section
-          .text-h6 Alert
+          .text-h6 Откликнувшиеся
         q-card-section.q-pt-none
-          q-table(title='Treats' :data='data' :columns='columns' row-key='name' :loading="loading")
+          q-table(title='Список откликнувшихся на вакансию' :data='data' :columns='columns' row-key='name' :loading="loading")
     q-card-section
       .text-h6 Доступные вакансии
       .text-subtitle2 Вакансии
