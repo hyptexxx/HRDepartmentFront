@@ -54,7 +54,7 @@ export default class LoginForm extends Mixins(LoginStore) {
       const result = await this.$axios.post<AuthResponse>('/auth', formData)
 
       switch (result.status) {
-        case 404:
+        case 200:
 
           this.$q.localStorage.set('isLogged', true)
           this.$q.localStorage.set('user', result.data)
