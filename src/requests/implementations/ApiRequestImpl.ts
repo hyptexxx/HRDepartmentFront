@@ -64,6 +64,6 @@ export default class ApiRequestImpl extends Vue implements ApiRequestService {
   }
 
   public async deleteEmployeeRequest (employeeId: number[]): Promise<void> {
-    await this.$axios.delete('/employee/1')
+    await this.$axios.delete(`/employee/${employeeId.toString()}`)
   }
 }
