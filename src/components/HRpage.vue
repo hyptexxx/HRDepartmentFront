@@ -52,6 +52,8 @@ export default class HRpage extends Mixins(ApiRequestImpl, LoginStore) {
   }]
 
   private async deleteEmployee (): Promise<void> {
+    // eslint-disable-next-line no-unused-expressions
+    this.selected?.splice(0, this.selected?.length)
     this.loading = true
     const arrId: number[] = []
     // eslint-disable-next-line no-unused-expressions
