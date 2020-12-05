@@ -15,20 +15,20 @@ export default class AuthService extends Vue {
       })
       next('/vacation')
     } else {
-      // const user: User = (LocalStorage.getItem('user')) as User
-      // if (user) {
-      //   if (user.role === 'hr') {
-      //     next()
-      //   } else {
-      //     this.$q.notify({
-      //       color: 'negative',
-      //       message: 'Недостаточно прав',
-      //       icon: 'report_problem',
-      //       progress: true,
-      //       position: 'bottom'
-      //     })
-      //   }
-      // }
+      const user: User = (LocalStorage.getItem('user')) as User
+      if (user) {
+        if (user.role === 'HR') {
+          next()
+        } else {
+          this.$q.notify({
+            color: 'negative',
+            message: 'Недостаточно прав',
+            icon: 'report_problem',
+            progress: true,
+            position: 'bottom'
+          })
+        }
+      }
       next()
     }
   };
