@@ -168,8 +168,7 @@ private data: Employee[] = []
     this.loading = true
     const formData = new FormData()
 
-    console.log(this.selected)
-    console.log(this.selected[0])
+    console.log(this.vacation)
     formData.append('potentialEmployee', JSON.stringify(this.selected[0]))
     formData.append('vacancy', JSON.stringify(this.vacation))
     const result = await this.$axios.post('/vacancy/potentialEmployee', formData)
@@ -202,6 +201,7 @@ private data: Employee[] = []
   private async showEmploeeOnVacantion (vacation: Vacation): Promise<void> {
     this.dialog = true
     this.loading = true
+    this.vacation = vacation
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
     const resultEmployeeList: Employee[] = await this.getAllEmploee(vacation)
     if (resultEmployeeList.length) {
