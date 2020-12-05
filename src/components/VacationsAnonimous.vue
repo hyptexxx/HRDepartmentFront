@@ -168,6 +168,8 @@ private data: Employee[] = []
     this.loading = true
     const formData = new FormData()
 
+    console.log(this.selected)
+    console.log(this.selected[0])
     formData.append('potentialEmployee', JSON.stringify(this.selected[0]))
     formData.append('vacancy', JSON.stringify(this.vacation))
     const result = await this.$axios.post('/vacancy/potentialEmployee', formData)
