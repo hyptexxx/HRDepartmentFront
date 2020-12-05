@@ -58,7 +58,19 @@
         q-card-section
           .text-h6 Откликнувшиеся
         q-card-section.q-pt-none
-          q-table(title='Список откликнувшихся на вакансию' :data='data' :columns='columns' row-key='name' :loading="loading")
+          q-table(title='Список откликнувшихся на вакансию'
+            :data='data'
+            :columns='columns'
+            row-key='name'
+            :loading="loading"
+            selection="single"
+            :selected.sync="selected")
+            template(v-slot:top='')
+              q-btn.bg-light-green-7.text-white(@click='hire' align="left" flat label="Принять" :disable="selected.length === 0")
+            template(v-slot:top-row='')
+              q-tr
+                q-td(colspan='100%')
+                  | Top row
     q-card-section
       .text-h6 Доступные вакансии
       .text-subtitle2 Вакансии
@@ -87,7 +99,7 @@
               q-btn.bg-light-green-7.text-white(@click="setIdVacation(vacation.id)" v-if="isLoginned" align="left" flat label="Откликнуться")
               q-btn.bg-red-7.text-white(@click="deleteVacantion(vacation.id)" v-if="!isLoginned" align="left" flat label="Удалить")
               q-btn.bg-light-green-7.text-white(@click="editVacantion(vacation)" v-if="!isLoginned" align="left" flat label="Редактировать")
-              q-btn.bg-purple.text-white(@click="showEmploeeOnVacantion(vacation.id)" v-if="!isLoginned" align="left" flat label="Отобразить откликнувшихся")
+              q-btn.bg-purple.text-white(@click="showEmploeeOnVacantion(vacation)" v-if="!isLoginned" align="left" flat label="Отобразить откликнувшихся")
         q-separator
 </template>
 
@@ -134,26 +146,11 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     { name: 'Сопроводительное письмо', label: 'letter', field: 'letter' }
   ]
 
-private data: Employee[] = [
-  {
-    city: '',
-    name: '',
-    letter: '',
-    phoneNumber: ''
-  }
-]
+private data: Employee[] = []
 
-  private vacantions: Vacation[] | null = [{
-    id: 12,
-    city: 'ZALUPYANSK',
-    category: 'каво-то',
-    jobType: 'что-то',
-    role: 'daun',
-    requirement: 'TREBOAS;JHASDLFJHQLIJKREHEWKHJLQWERHJT',
-    openingDate: '10-123-23',
-    stateId: 0,
-    projectId: 0
-  }]
+  private selected: Employee[] = []
+
+  private vacantions: Vacation[] | null = []
 
   private vacation: Vacation | null = {
     id: 0,
@@ -167,17 +164,44 @@ private data: Employee[] = [
     projectId: 100
   }
 
+  private async hire (): Promise<void> {
+    this.loading = true
+    const formData = new FormData()
+
+    formData.append('potentialEmployee', JSON.stringify(this.selected[0]))
+    formData.append('vacancy', JSON.stringify(this.vacation))
+    const result = await this.$axios.post('/vacancy/potentialEmployee', formData)
+    if (result.status === 200) {
+      this.$q.notify({
+        type: 'positive',
+        message: 'Сотрудник принят в штат.',
+        icon: 'report_problem',
+        progress: true,
+        position: 'bottom'
+      })
+    } else {
+      this.$q.notify({
+        type: 'negative',
+        message: 'Произошла ошибка',
+        icon: 'report_problem',
+        progress: true,
+        position: 'bottom'
+      })
+    }
+    this.loading = false
+  }
+
   // eslint-disable-next-line @typescript-eslint/require-await
   private async mounted (): Promise<void> {
     this.isLoginned = !(this.$q.localStorage.getItem('user') as User)
     this.vacantions = await this.getAllVacationsRequest()
   }
 
-  private async showEmploeeOnVacantion (idVacancy: number): Promise<void> {
+  private async showEmploeeOnVacantion (vacation: Vacation): Promise<void> {
     this.dialog = true
     this.loading = true
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
-    const resultEmployeeList: Employee[] = await this.getAllEmploee(idVacancy)
+    const resultEmployeeList: Employee[] = await this.getAllEmploee(vacation)
     if (resultEmployeeList.length) {
       this.data = resultEmployeeList
     } else {

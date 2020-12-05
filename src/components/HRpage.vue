@@ -42,14 +42,7 @@ export default class HRpage extends Mixins(ApiRequestImpl, LoginStore) {
     this.isDisabled = !this.selected?.length
   }
 
-  private selected: EmployeeHired[] | null = [{
-    id: 0,
-    city: 'string',
-    name: 'string',
-    idProject: 0,
-    role: 'string',
-    dateOfEmployment: 'string'
-  }]
+  private selected: EmployeeHired[] | null = []
 
   private async deleteEmployee (): Promise<void> {
     // eslint-disable-next-line no-unused-expressions
@@ -97,15 +90,6 @@ export default class HRpage extends Mixins(ApiRequestImpl, LoginStore) {
     { name: 'Сопроводительное письмо', label: 'letter', field: 'letter' }
   ]
 
-  private data: EmployeeHired[] = [
-    {
-      id: 0,
-      city: 'str2345ing',
-      name: '45',
-      idProject: 0,
-      role: '2345',
-      dateOfEmployment: 'string'
-    }
-  ]
+  private data: EmployeeHired[] = []
 }
 </script>

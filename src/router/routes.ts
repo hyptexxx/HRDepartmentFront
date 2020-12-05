@@ -9,7 +9,7 @@ const authService = new AuthService()
 
 const routes: RouteConfig[] = [
   {
-    path: '/vacation',
+    path: '/vacancy',
     components: {
       default: MainLayout
     },
@@ -20,7 +20,7 @@ const routes: RouteConfig[] = [
         children: [
           {
             name: 'vacation',
-            path: '/vacation',
+            path: '/vacancy',
             component: VacationsAnonimous
           },
           {

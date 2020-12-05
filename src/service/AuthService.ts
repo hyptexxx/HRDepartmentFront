@@ -13,7 +13,7 @@ export default class AuthService extends Vue {
         progress: true,
         position: 'bottom'
       })
-      next('/vacation')
+      next('/vacancy')
     } else {
       const user: User = (LocalStorage.getItem('user')) as User
       if (user) {
@@ -41,6 +41,6 @@ export default class AuthService extends Vue {
   };
 
   public redirect = (to: Route, from: Route, next: (path?: string) => void): void => {
-    next('/vacantions')
+    next('/vacancy')
   };
 }

@@ -13,7 +13,7 @@ export interface ApiRequestService{
 
   deleteVacancy (id: number): Promise<void>
 
-  getAllEmploee(idVacancy: number): Promise<Employee[]>
+  getAllEmploee(idVacancy: Vacation): Promise<Employee[]>
 
   getAllEmploeeInWork(): Promise<EmployeeHired[]>
 
