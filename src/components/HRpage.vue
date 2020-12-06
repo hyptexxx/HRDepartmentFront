@@ -45,19 +45,24 @@ export default class HRpage extends Mixins(ApiRequestImpl, LoginStore) {
   private selected: EmployeeHired[] | null = []
 
   private async deleteEmployee (): Promise<void> {
-    // eslint-disable-next-line no-unused-expressions
     this.loading = true
     const arrId: number[] = []
     // eslint-disable-next-line no-unused-expressions
     this.selected?.forEach((employee: EmployeeHired) => arrId.push(employee.id))
-    await this.deleteEmployeeRequest(arrId)
-    if (this.selected) {
-      for (let i = 0; i < this.selected?.length; i++) {
-        this.selected.forEach((selected: EmployeeHired) => {
-          this.data = this.data.filter((employee: EmployeeHired) => selected.id !== employee.id)
-        })
+    const result = await this.$axios.delete(`/employee/${arrId.toString()}`)
+    if (result.status === 200) {
+      if (this.selected) {
+        this.selected = this.selected?.splice(0, this.selected?.length)
+      }
+      if (this.selected) {
+        for (let i = 0; i < this.selected?.length; i++) {
+          this.selected.forEach((selected: EmployeeHired) => {
+            this.data = this.data.filter((employee: EmployeeHired) => selected.id !== employee.id)
+          })
+        }
       }
     }
+
     this.loading = false
   }
 
