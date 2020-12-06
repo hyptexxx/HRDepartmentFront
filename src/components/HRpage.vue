@@ -86,7 +86,7 @@ export default class HRpage extends Mixins(ApiRequestImpl, LoginStore) {
       sortable: true
     },
     { name: 'Номер телефона', align: 'center', label: 'Номер телефона', field: 'phoneNumber', sortable: true },
-    { name: 'Город', label: 'Город', field: 'city', sortable: true },
+    { name: 'Город', label: 'Город', field: 'city', sortable: true }
   ]
 
   private data: EmployeeHired[] = []
