@@ -204,12 +204,13 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     this.dialog = true
     this.loading = true
     this.vacation = vacation
-    this.data = null
+
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
     const resultEmployeeList: Employee[] = await this.getAllEmploee(vacation)
     if (resultEmployeeList.length) {
       this.data = resultEmployeeList
     } else {
+      this.data = null
       this.$q.notify({
         type: 'negative',
         message: 'Ничего не найдено',
