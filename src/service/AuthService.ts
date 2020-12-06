@@ -32,6 +32,34 @@ export default class AuthService extends Vue {
     }
   };
 
+  public checkLoggedInAndRoleLeader = (to: Route, from: Route, next: (path?: string) => void): void => {
+    if (!(LocalStorage.getItem('isLogged') as boolean)) {
+      this.$q.notify({
+        color: 'negative',
+        message: 'Выполните авторизацию',
+        icon: 'report_problem',
+        progress: true,
+        position: 'bottom'
+      })
+      next('/vacancy')
+    } else {
+      const user: User = (LocalStorage.getItem('user')) as User
+      if (user) {
+        if (user.role === 'LEADER') {
+          next()
+        } else {
+          this.$q.notify({
+            color: 'negative',
+            message: 'Недостаточно прав',
+            icon: 'report_problem',
+            progress: true,
+            position: 'bottom'
+          })
+        }
+      }
+    }
+  };
+
   public checkNotLoggedIn = (to: Route, from: Route, next: (path?: string) => void): void => {
     if ((LocalStorage.getItem('isLogged') as boolean)) {
       next('/attendance/stats/semester')

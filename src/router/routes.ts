@@ -25,6 +25,7 @@ const routes: RouteConfig[] = [
             component: VacationsAnonimous
           },
           {
+            // beforeEnter: authService.checkLoggedInAndRoleLeader,
             name: 'leader',
             path: '/leader',
             component: LeaderPage

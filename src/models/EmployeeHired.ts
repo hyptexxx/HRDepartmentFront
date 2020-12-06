@@ -1,9 +1,9 @@
 export interface EmployeeHired {
-  id: 0,
+  id: number,
   name: string,
   city: string,
   projectName: string,
-  projectId: 0,
+  projectId: number,
   role: string,
   dateOfEmployment: string,
   phoneNumber: string
