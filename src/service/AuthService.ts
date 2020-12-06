@@ -45,7 +45,7 @@ export default class AuthService extends Vue {
     } else {
       const user: User = (LocalStorage.getItem('user')) as User
       if (user) {
-        if (user.role === 'LEADER') {
+        if (user.role === 'MANAGER') {
           next()
         } else {
           this.$q.notify({
