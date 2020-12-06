@@ -7,9 +7,7 @@
         :data='data'
         :columns='columns'
         row-key='id'
-        :loading="loading"
-        selection="multiple"
-        :selected.sync="selected")
+        :loading="loading")
         template(v-slot:top='')
           q-chip.bg-light-green-1(square='' color='#DBE8D1' text-color='black' icon='home' :label='sum')
         template(v-slot:top-row='')
@@ -51,6 +49,7 @@ export default class ACCOUNTANTpage extends Mixins(ApiRequestImpl, LoginStore) {
     { name: 'projectName', align: 'center', label: 'Проект', field: 'projectName', sortable: true },
     { name: 'dateOfEmployment', align: 'center', label: 'Дата принятия', field: 'dateOfEmployment', sortable: true },
     { name: 'phoneNumber', align: 'center', label: 'Номер телефона', field: 'phoneNumber', sortable: true },
+    { name: 'salary', label: 'Зарплата', align: 'center', field: 'salary', sortable: true },
     { name: 'city', label: 'Город', align: 'center', field: 'city', sortable: true }
   ]
 
