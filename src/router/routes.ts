@@ -4,6 +4,7 @@ import MainLayout from 'layouts/MainLayout.vue'
 import Index from 'pages/Index.vue'
 import AuthService from 'src/service/AuthService'
 import HRpage from 'components/HRpage.vue'
+import LeaderPage from 'components/LeaderPage.vue'
 
 const authService = new AuthService()
 
@@ -22,6 +23,11 @@ const routes: RouteConfig[] = [
             name: 'vacation',
             path: '/vacancy',
             component: VacationsAnonimous
+          },
+          {
+            name: 'leader',
+            path: '/leader',
+            component: LeaderPage
           },
           {
             beforeEnter: authService.checkLoggedInAndRole,

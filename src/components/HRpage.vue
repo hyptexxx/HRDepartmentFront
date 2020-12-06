@@ -30,11 +30,13 @@ export default class HRpage extends Mixins(ApiRequestImpl, LoginStore) {
   private isDisabled = true
   private emploee: EmployeeHired = {
     id: 0,
-    city: 'string',
     name: 'string',
-    idProject: 0,
+    city: 'string',
+    projectName: 'string',
+    projectId: 0,
     role: 'string',
-    dateOfEmployment: 'string'
+    dateOfEmployment: 'string',
+    phoneNumber: 'string'
   }
 
   @Watch('selected')

@@ -10,6 +10,7 @@ q-layout(view='hHr lpr fff')
     q-tabs(align='left')
       q-route-tab(to='/vacancy' label='Вакансии')
       q-route-tab(to='/employee' label='Нанятые сотрудники')
+      q-route-tab(to='/leader' label='Нанятые сотрудники')
   q-drawer.bg-amber-5(v-model='left' side='left' content-class="bg-grey-9 text-white" bordered='')
     account
   q-page-container
