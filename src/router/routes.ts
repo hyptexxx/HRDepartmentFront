@@ -26,19 +26,19 @@ const routes: RouteConfig[] = [
             component: VacationsAnonimous
           },
           {
-            // beforeEnter: authService.checkLoggedInAndRoleLeaderACCOUNTANT,
+            beforeEnter: authService.checkLoggedInAndRoleLeaderACCOUNTANT,
             name: 'accountant',
             path: '/accountant',
             component: ACCOUNTANTpage
           },
           {
-            // beforeEnter: authService.checkLoggedInAndRoleLeader,
+            beforeEnter: authService.checkLoggedInAndRoleLeader,
             name: 'leader',
             path: '/leader',
             component: LeaderPage
           },
           {
-            // beforeEnter: authService.checkLoggedInAndRole,
+            beforeEnter: authService.checkLoggedInAndRole,
             name: 'employee',
             path: '/employee',
             component: HRpage
