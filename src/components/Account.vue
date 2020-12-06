@@ -7,7 +7,7 @@
             img(src='https://cdn.quasar.dev/img/avatar.png')
         q-item-section.text-white
           q-item-label.text-white {{user.login}}
-          q-item-label.text-white(caption='') {{user.post}}
+          q-item-label.text-white(caption='') {{user.role}}
         q-item-section(side='').text-white
           | Аккаунт
       q-card.bg-grey-8
