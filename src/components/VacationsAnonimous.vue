@@ -126,6 +126,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
   private idVacation = 234
 
   private emploee: Employee = {
+    id: 0,
     city: '',
     name: '',
     letter: '',
@@ -171,6 +172,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     formData.append('vacancy', JSON.stringify(this.vacation))
     const result = await this.$axios.post('/vacancy/potentialEmployee', formData)
     if (result.status === 200) {
+      this.data = this.data.filter(value => value.id !== this.selected[0].id)
       this.$q.notify({
         type: 'positive',
         message: 'Сотрудник принят в штат.',
