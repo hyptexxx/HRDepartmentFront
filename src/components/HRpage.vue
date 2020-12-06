@@ -51,7 +51,7 @@ export default class HRpage extends Mixins(ApiRequestImpl, LoginStore) {
     const arrId: number[] = []
     // eslint-disable-next-line no-unused-expressions
     this.selected?.forEach((employee: EmployeeHired) => arrId.push(employee.id))
-
+    console.log(arrId)
     await this.deleteEmployeeRequest(arrId)
     if (this.selected) {
       for (let i = 0; i < this.selected?.length; i++) {
