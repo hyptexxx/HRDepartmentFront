@@ -78,7 +78,7 @@ export default class HRpage extends Mixins(ApiRequestImpl, LoginStore) {
 
   private columns = [
     {
-      name: 'name',
+      name: 'ФИО',
       required: true,
       label: 'ФИО',
       align: 'left',
@@ -87,7 +87,6 @@ export default class HRpage extends Mixins(ApiRequestImpl, LoginStore) {
     },
     { name: 'Номер телефона', align: 'center', label: 'Номер телефона', field: 'phoneNumber', sortable: true },
     { name: 'Город', label: 'Город', field: 'city', sortable: true },
-    { name: 'Сопроводительное письмо', label: 'letter', field: 'letter' }
   ]
 
   private data: EmployeeHired[] = []
