@@ -208,7 +208,7 @@ private data: Employee[] = []
       this.data = resultEmployeeList
     } else {
       this.$q.notify({
-        type: 'positive',
+        type: 'negative',
         message: 'Ничего не найдено',
         icon: 'report_problem',
         progress: true,
@@ -282,6 +282,7 @@ private data: Employee[] = []
         if (this.vacantions) {
           this.vacantions.push(vacancy)
         }
+        this.vacation = null
         this.$q.notify({
           type: 'positive',
           message: 'Запись добавлена',
