@@ -26,7 +26,7 @@ const routes: RouteConfig[] = [
             component: VacationsAnonimous
           },
           {
-            beforeEnter: authService.checkLoggedInAndRoleLeader,
+            beforeEnter: authService.checkLoggedInAndRoleLeaderACCOUNTANT,
             name: 'accountant',
             path: '/accountant',
             component: ACCOUNTANTpage
