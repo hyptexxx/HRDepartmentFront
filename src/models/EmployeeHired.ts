@@ -6,5 +6,6 @@ export interface EmployeeHired {
   projectId: number,
   role: string,
   dateOfEmployment: string,
+  salary: number,
   phoneNumber: string
 }
