@@ -146,7 +146,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     { name: 'Город', label: 'Город', field: 'city', sortable: true }
   ]
 
-  private data: Employee[] = []
+  private data: Employee[] | null= []
 
   private selected: Employee[] = []
 
@@ -172,7 +172,9 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     formData.append('vacancy', JSON.stringify(this.vacation))
     const result = await this.$axios.post('/vacancy/potentialEmployee', formData)
     if (result.status === 200) {
-      this.data = this.data.filter(value => value.id !== this.selected[0].id)
+      if (this.data) {
+        this.data = this.data.filter(value => value.id !== this.selected[0].id)
+      }
       this.$q.notify({
         type: 'positive',
         message: 'Сотрудник принят в штат.',
@@ -202,6 +204,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
     this.dialog = true
     this.loading = true
     this.vacation = vacation
+    this.data = null
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment
     const resultEmployeeList: Employee[] = await this.getAllEmploee(vacation)
     if (resultEmployeeList.length) {
