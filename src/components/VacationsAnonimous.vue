@@ -61,7 +61,7 @@
           q-table(title='Список откликнувшихся на вакансию'
             :data='data'
             :columns='columns'
-            row-key='name'
+            row-key='id'
             :loading="loading"
             selection="single"
             :selected.sync="selected")
