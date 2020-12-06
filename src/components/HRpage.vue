@@ -82,7 +82,7 @@ export default class HRpage extends Mixins(ApiRequestImpl, LoginStore) {
       required: true,
       label: 'ФИО',
       align: 'left',
-      field: 'row => row.name',
+      field: 'name',
       sortable: true
     },
     { name: 'Номер телефона', align: 'center', label: 'Номер телефона', field: 'phoneNumber', sortable: true },
