@@ -16,7 +16,7 @@
     q-btn.bg-grey-10(v-else flat style="width: 100%" @click="setVisible(true)")
       q-item-section(avatar='')
         q-avatar(rounded='' size='48px')
-          img(src='https://school.altayctf.ru/images/site/devteam/unk.png')
+          img(src='https://sun1-96.userapi.com/impg/CqfYgXlV9cCGiFxucEJbiTm8_qL5L4g8Lhxokw/YGwECNt0LkY.jpg?size=200x0&quality=96&crop=0,106,1080,1080&sign=8b2b8b2ad498ce5cda490c205404469c&ava=1')
       q-item-section
         q-item-label Вход
 </template>
