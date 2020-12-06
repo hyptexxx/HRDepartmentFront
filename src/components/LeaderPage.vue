@@ -139,6 +139,7 @@ export default class LeaderPage extends Mixins(ApiRequestImpl, LoginStore) {
     projectId: 0,
     role: 'string',
     dateOfEmployment: 'string',
+    salary: 0,
     phoneNumber: 'string'
   }]
 }
