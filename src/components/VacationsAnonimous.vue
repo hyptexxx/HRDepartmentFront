@@ -138,15 +138,14 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
       required: true,
       label: 'ФИО',
       align: 'left',
-      field: 'row => row.name',
+      field: 'name',
       sortable: true
     },
     { name: 'Номер телефона', align: 'center', label: 'Номер телефона', field: 'phoneNumber', sortable: true },
-    { name: 'Город', label: 'Город', field: 'city', sortable: true },
-    { name: 'Сопроводительное письмо', label: 'letter', field: 'letter' }
+    { name: 'Город', label: 'Город', field: 'city', sortable: true }
   ]
 
-private data: Employee[] = []
+  private data: Employee[] = []
 
   private selected: Employee[] = []
 
@@ -168,7 +167,6 @@ private data: Employee[] = []
     this.loading = true
     const formData = new FormData()
 
-    console.log(this.vacation)
     formData.append('potentialEmployee', JSON.stringify(this.selected[0]))
     formData.append('vacancy', JSON.stringify(this.vacation))
     const result = await this.$axios.post('/vacancy/potentialEmployee', formData)
