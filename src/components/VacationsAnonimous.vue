@@ -225,7 +225,6 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
   }
 
   private setAddVisible (): void {
-    console.log(2)
     this.isAddVisible = true
   }
 
@@ -292,7 +291,8 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
         if (this.vacantions) {
           this.vacantions.push(vacancy)
         }
-        this.vacation = null
+        // this.vacation = null
+        this.isAddVisible = false
         this.$q.notify({
           type: 'positive',
           message: 'Запись добавлена',
