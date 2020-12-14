@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { boot } from 'quasar/wrappers'
 import { AuthResponse } from 'src/models/auth'
-import { Notify, LocalStorage } from 'quasar'
+import { Notify } from 'quasar'
 
 const config: AxiosRequestConfig = {
   baseURL: process.env.API_BASE_URL
