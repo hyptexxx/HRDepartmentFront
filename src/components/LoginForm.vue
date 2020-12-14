@@ -66,7 +66,13 @@ export default class LoginForm extends Mixins(LoginStore) {
           break
         case 401:
         case 403:
-
+          this.$q.notify({
+            color: 'negative',
+            message: 'Аккаунт не найден',
+            icon: 'report_problem',
+            progress: true,
+            position: 'bottom'
+          })
           this.$q.localStorage.clear()
 
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
