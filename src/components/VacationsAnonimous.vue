@@ -74,7 +74,7 @@
     q-card-section
       .text-h6 Доступные вакансии
       .text-subtitle2 Вакансии
-      q-btn.bg-light-green-7.text-white(@click="isAddVisible = true" v-if="!isLoginned" flat label="Добавить вакансию")
+      q-btn.bg-light-green-7.text-white(@click="setAddVisible" v-if="!isLoginned" flat label="Добавить вакансию")
     q-separator(inset='')
     q-card-section
       q-list.rounded-borders(bordered='')
@@ -219,6 +219,10 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
       })
     }
     this.loading = false
+  }
+
+  private setAddVisible (): void {
+    this.isAddVisible = true
   }
 
   private editVacantion (idVacation: Vacation): void {
