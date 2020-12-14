@@ -21,17 +21,17 @@ export default boot(({ Vue, router }) => {
   instance.interceptors.response.use(response => response, async (error: { response: AxiosResponse<AuthResponse>}) => {
     const response: AxiosResponse<AuthResponse> = error.response
     if (response) {
-      if (response.status === 401 || response.status === 403) {
-        Notify.create({
-          color: 'negative',
-          progress: true,
-          caption: 'Ошибка авторизации',
-          message: 'Авторизация',
-          icon: 'report_problem',
-          position: 'bottom'
-        })
-        LocalStorage.remove('isLogged')
-      }
+      // if (response.status === 401 || response.status === 403) {
+      //   Notify.create({
+      //     color: 'negative',
+      //     progress: true,
+      //     caption: 'Ошибка авторизации',
+      //     message: 'Авторизация',
+      //     icon: 'report_problem',
+      //     position: 'bottom'
+      //   })
+      //   LocalStorage.remove('isLogged')
+      // }
       if (response.status === 404) {
         Notify.create({
           color: 'negative',
