@@ -25,16 +25,12 @@ export default boot(({ Vue, router }) => {
         Notify.create({
           color: 'negative',
           progress: true,
-          caption: 'Пожалуйста, авторизируйтесь',
+          caption: 'Ошибка авторизации',
           message: 'Авторизация',
           icon: 'report_problem',
           position: 'bottom'
         })
         LocalStorage.remove('isLogged')
-        router.push({ name: 'login' }).then(
-          () => { return null },
-          () => { return null }
-        )
       }
       if (response.status === 404) {
         Notify.create({

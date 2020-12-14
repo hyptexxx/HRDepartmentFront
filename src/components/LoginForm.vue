@@ -38,9 +38,6 @@ export default class LoginForm extends Mixins(LoginStore) {
     role: 'hr'
   }
 
-  // руководитель - текущие сотрудники (нет редактирования)
-  // хр - текущие (crud) + те кто оставил заявки (принять отклонить)
-  // бухгатлер - текущие сотрудники (просмотр) + зарплаты (редактирование)
   private async authorizeUser (): Promise<void> {
     this.$v.$touch()
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
@@ -65,6 +62,17 @@ export default class LoginForm extends Mixins(LoginStore) {
           this.setResponseUser(result.data as unknown as User)
 
           this.setVisible(false)
+
+          break
+        case 401:
+        case 403:
+
+          this.$q.localStorage.clear()
+
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
+          this.setLoginned(false)
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
+          this.setResponseUser(null)
 
           break
       }

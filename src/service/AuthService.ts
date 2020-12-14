@@ -88,7 +88,6 @@ export default class AuthService extends Vue {
     }
   };
 
-
   public checkNotLoggedIn = (to: Route, from: Route, next: (path?: string) => void): void => {
     if ((LocalStorage.getItem('isLogged') as boolean)) {
       next('/attendance/stats/semester')
