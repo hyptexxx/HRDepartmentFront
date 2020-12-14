@@ -16,6 +16,7 @@
           q-input(filled v-model="emploee.phoneNumber" label="Номер телефона" type='text' ref="phone" @keydown.enter="sendUserRespone")
           span.text-red-10(v-if="!$v.emploee.phoneNumber.required && $v.emploee.phoneNumber.$params.required" class="error-label") Обязательно
         q-card-section(side='')
+
           q-btn.bg-light-green-7.text-white(@click="sendUserRespone" flat label="Отправить")
     q-dialog(v-model='isAddVisible')
       q-card
@@ -31,6 +32,7 @@
           q-input(filled v-model="vacation.requirement" label="Введите описание" type='text')
         q-card-section(side='')
           q-btn.bg-light-green-7.text-white(@click="sendAddRequest" flat label="Добавить")
+
     q-dialog(v-model='isEditVisible')
       q-card
         q-card-section.row.items-center.q-pb-none
@@ -45,6 +47,7 @@
           q-input(filled v-model="vacation.requirement" label="Введите описание" type='text')
         q-card-section(side='')
           q-btn.bg-light-green-7.text-white(@click="editRequest" flat label="Внести изменения")
+
     q-dialog(v-model='dialog' persistent='' :maximized='maximizedToggle' transition-show='slide-up' transition-hide='slide-down')
       q-card.bg-white.text-black
         q-bar
@@ -222,6 +225,7 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
   }
 
   private setAddVisible (): void {
+    console.log(2)
     this.isAddVisible = true
   }
 
@@ -262,7 +266,6 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
         if (this.vacantions) {
           this.vacantions = this.vacantions?.filter((e: Vacation) => { return e.id !== id })
         }
-        this.isAddVisible = false
         this.vacation = null
         this.$q.notify({
           type: 'positive',
