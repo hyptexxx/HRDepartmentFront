@@ -11,10 +11,6 @@
         template(v-slot:top='')
           | Сумма зарплат
           q-chip.bg-light-green-1(square='' color='#DBE8D1' text-color='black' icon='attach_money' :label='sum')
-        template(v-slot:top-row='')
-          q-tr
-            q-td(colspan='100%')
-              | Top row
 </template>
 
 <script lang="ts">

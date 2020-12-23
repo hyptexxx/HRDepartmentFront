@@ -70,10 +70,6 @@
             :selected.sync="selected")
             template(v-slot:top='')
               q-btn.bg-light-green-7.text-white(@click='hire' align="left" flat label="Принять" :disable="selected.length === 0")
-            template(v-slot:top-row='')
-              q-tr
-                q-td(colspan='100%')
-                  | Top row
     q-card-section
       .text-h6 Доступные вакансии
       .text-subtitle2 Вакансии
@@ -146,7 +142,8 @@ export default class VacationsAnonimous extends Mixins(ApiRequestImpl, LoginStor
       sortable: true
     },
     { name: 'Номер телефона', align: 'center', label: 'Номер телефона', field: 'phoneNumber', sortable: true },
-    { name: 'Город', label: 'Город', field: 'city', sortable: true }
+    { name: 'Город', label: 'Город', field: 'city', align: 'center', sortable: true },
+    { name: 'Сопроводительное письмо', label: 'Сопроводительное письмо', field: 'letter', align: 'center', sortable: true }
   ]
 
   private data: Employee[] | null= []
