@@ -12,6 +12,7 @@ q-layout(view='hHr lpr fff')
       q-route-tab(to='/employee' label='Панель отдела кадров')
       q-route-tab(to='/leader' label='Панель начальника отдела')
       q-route-tab(to='/accountant' label='Отчёт по зарплатам')
+      q-route-tab(to='/description' label='О нашей компании')
   q-drawer.bg-amber-5(v-model='left' side='left' content-class="bg-grey-9 text-white" bordered='')
     account
   q-page-container
